@@ -1,13 +1,19 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './App';
 import reportWebVitals from './reportWebVitals';
+import TrocaTema from './componentes/TrocaTema/TrocaTema';
+import { TemaProvider } from './componentes/TrocaTema/TemaContext';
+import { BrowserRouter } from "react-router-dom"
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+    <BrowserRouter>
+      <TemaProvider>
+        <TrocaTema />
+      </TemaProvider> 
+    </BrowserRouter> 
   </React.StrictMode>
 );
 
