@@ -1,2 +1,2 @@
-import Agua from "./Agua"
-export default Agua
+import EstadoAgua from "./EstadoAgua"
+export default EstadoAgua
