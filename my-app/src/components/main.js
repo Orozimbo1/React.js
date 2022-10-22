@@ -1,17 +1,31 @@
 import React, { Component } from "react";
+
+import Form from "./form";
+import Tarefas from "./tarefas";
+
 import "./main.css"
-
-// Form
-import { FaPlus } from "react-icons/fa"
-
-// Form
-import { FaEdit, FaWindowClose } from "react-icons/fa"
 
 export default class Main extends Component {
   state = {
     novaTarefa: '',
     tarefas: [],
     index: -1
+  }
+
+  componentDidMount() {
+    const tarefas = JSON.parse(localStorage.getItem("tarefas"))
+
+    if(!tarefas) return
+
+    this.setState({ tarefas })
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    const { tarefas } = this.state
+
+    if(tarefas === prevState.tarefas) return
+
+    localStorage.setItem("tarefas", JSON.stringify(tarefas))
   }
 
   handleSubmit = (e) => {
@@ -81,34 +95,19 @@ export default class Main extends Component {
     return (
       <div className="main">
         <h1>Lista de tarefas:</h1>
-        <form onSubmit={this.handleSubmit} action="#" className="form">
-          <input
-          onChange={this.handleChange}
-          value={novaTarefa}
-          type="text"/>
-          <button type="submit">
-            <FaPlus />
-          </button>
-        </form>
 
-        <ul className="tarefas">
-          {tarefas.map((tarefa, index) => (
-            <li key={tarefa}>
-              {tarefa}
+        <Form
+          handleSubmit={this.handleSubmit}
+          handleChange={this.handleChange}
+          novaTarefa={novaTarefa}
+        />
 
-              <span>
-                <FaEdit
-                  onClick={(e) => this.handleEdit(e, index)}
-                  className="edit"
-                />
-                <FaWindowClose
-                  onClick={(e) => this.handleDelete(e, index)}
-                  className="delete"
-                />
-              </span>
-            </li>
-          ))}
-        </ul>
+        <Tarefas
+          handleEdit={this.handleEdit}
+          handleDelete={this.handleDelete}
+          tarefas={tarefas}
+        />
+
       </div>
     )
   }
